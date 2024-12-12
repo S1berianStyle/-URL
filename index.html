@@ -1,0 +1,30 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обрезатель URL</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-theme">
+    <h1>Обрезатель URL</h1>
+    
+    <!-- Кнопка переключения тем теперь перед основным контейнером -->
+    <button id="themeSwitcher" onclick="toggleTheme()">Тёмная тема</button>
+    
+    <div id="app">
+        <div class="form-group">
+            <label for="input">Вставьте URL:</label>
+            <textarea id="input" placeholder="Вставьте URL здесь..." oninput="processURLs()"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="output">Результат:</label>
+            <textarea id="output" readonly></textarea>
+            <button onclick="copyResult()">Скопировать</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
