@@ -1,33 +1,49 @@
-// script.js
 function processURLs() {
-    const inputElement = document.getElementById('input');
-    const outputElement = document.getElementById('output');
+  const inputElement = document.getElementById("input");
+  const outputElement = document.getElementById("output");
 
-    let inputText = inputElement.value.trim(); // Получаем текст из поля ввода
-    if (!inputText) {
-        alert('Пожалуйста, введите URL!');
-        return;
+  let inputText = inputElement.value.trim(); // Получаем текст из поля ввода
+  if (!inputText) {
+    // alert('Пожалуйста, введите URL или ID!');
+    return;
+  }
+
+  // Разделяем текст на строки
+  let lines = inputText.split(/\r?\n/);
+
+  // Обрабатываем каждую строку
+  let processedUrls = lines.map((line) => {
+    line = line.trim(); // Убираем пробелы
+    if (/^\d+$/.test(line)) {
+      // Если строка содержит только цифры, возвращаем её как есть
+      return line;
+    } else {
+      // Если это ссылка, извлекаем последнюю часть после последнего слэша
+      let lastSlashIndex = line.lastIndexOf("/");
+      return lastSlashIndex === -1 ? "" : line.substring(lastSlashIndex + 1);
     }
+  });
 
-    // Разделяем текст на строки
-    let lines = inputText.split(/\r?\n/);
+  // Удаляем пустые элементы, если есть
+  processedUrls = processedUrls.filter((item) => item);
 
-    // Извлекаем последнюю часть каждого URL (после последнего слэша)
-    let processedUrls = lines.map(line => {
-        let lastSlashIndex = line.lastIndexOf('/');
-        return lastSlashIndex === -1 ? '' : line.substring(lastSlashIndex + 1);
-    });
+  // Объединяем результаты в одну строку через запятую
+  let result = processedUrls.join(", ");
 
-    // Объединяем результаты в одну строку через запятую
-    let result = processedUrls.join(', ');
-
-    // Отображаем результат в текстовом поле вывода
-    outputElement.value = result;
+  // Отображаем результат в текстовом поле вывода
+  outputElement.value = result;
 }
 
 function copyResult() {
-    const outputElement = document.getElementById('output');
-    navigator.clipboard.writeText(outputElement.value); // Копируем текст в буфер обмена
+  const outputElement = document.getElementById("output");
+  navigator.clipboard.writeText(outputElement.value); // Копируем текст в буфер обмена
+}
+
+function clearFields() {
+  const inputElement = document.getElementById("input");
+  const outputElement = document.getElementById("output");
+  inputElement.value = "";
+  outputElement.value = "";
 }
 
 // Остальные функции остаются без изменений...
@@ -35,14 +51,26 @@ function copyResult() {
 let isDarkMode = false; // Флаг для отслеживания текущего режима
 
 function toggleTheme() {
-    if (isDarkMode) {
-        document.body.classList.remove('dark-theme'); // Удаляем класс dark-theme
-        document.body.classList.add('light-theme');   // Добавляем класс light-theme
-        document.getElementById('themeSwitcher').innerText = 'Тёмная тема'; // Меняем текст кнопки
-    } else {
-        document.body.classList.remove('light-theme'); // Удаляем класс light-theme
-        document.body.classList.add('dark-theme');     // Добавляем класс dark-theme
-        document.getElementById('themeSwitcher').innerText = 'Светлая тема'; // Меняем текст кнопки
-    }
-    isDarkMode = !isDarkMode; // Инвертируем флаг
+  const body = document.body;
+  const themeSwitcher = document.getElementById("themeSwitcher");
+  const headings = document.querySelectorAll("h1, label");
+
+  if (isDarkMode) {
+    body.classList.remove("dark-theme"); // Удаляем класс dark-theme
+    body.classList.add("light-theme"); // Добавляем класс light-theme
+    themeSwitcher.innerText = "Тёмная тема"; // Меняем текст кнопки
+
+    headings.forEach((heading) => {
+      heading.style.color = "#000"; // Цвет текста для светлой темы
+    });
+  } else {
+    body.classList.remove("light-theme"); // Удаляем класс light-theme
+    body.classList.add("dark-theme"); // Добавляем класс dark-theme
+    themeSwitcher.innerText = "Светлая тема"; // Меняем текст кнопки
+
+    headings.forEach((heading) => {
+      heading.style.color = "#fff"; // Цвет текста для тёмной темы
+    });
+  }
+  isDarkMode = !isDarkMode; // Инвертируем флаг
 }

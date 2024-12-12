@@ -1,95 +1,101 @@
 /* styles.css */
 
 :root {
-    --bg-color: #f9f9f9;
-    --text-color: #333;
-    --btn-bg-color: #007bff;
-    --btn-hover-bg-color: #0056b3;
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --btn-bg-color: #007bff;
+  --btn-hover-bg-color: #0056b3;
 }
 
 body.light-theme {
-    --bg-color: #f9f9f9;
-    --text-color: #333;
-    --btn-bg-color: #007bff;
-    --btn-hover-bg-color: #0056b3;
+  --bg-color: #f9f9f9;
+  --text-color: #333;
+  --btn-bg-color: #007bff;
+  --btn-hover-bg-color: #0056b3;
 }
 
 body.dark-theme {
-    --bg-color: #121212;
-    --text-color: #fff;
-    --btn-bg-color: #007bff;
-    --btn-hover-bg-color: #0056b3;
+  --bg-color: #121212;
+  --text-color: #fff;
+  --btn-bg-color: #007bff;
+  --btn-hover-bg-color: #0056b3;
 }
 
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: var(--bg-color);
-    transition: background-color 0.3s ease; /* Плавный переход при смене темы */
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background-color: var(--bg-color);
+  transition: background-color 0.3s ease; /* Плавный переход при смене темы */
+  flex-direction: column;
+  gap: 50px;
+  padding-top: 100px;
 }
 
 #app {
-    width: 80%;
-    max-width: 1200px;
-    text-align: center;
+  width: 80%;
+  max-width: 1200px;
+  text-align: center;
 }
 
 .form-group {
-    display: inline-block;
-    vertical-align: top;
-    width: 48%;
-    margin: 0 1%;
+  display: inline-block;
+  vertical-align: top;
+  width: 48%;
+  margin: 0 1%;
 }
 
 textarea {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    resize: none;
-    margin-bottom: 20px;
-    height: 250px;
-    background-color: transparent; /* Прозрачный фон для совместимости с темой */
-    color: var(--text-color); /* Цвет текста зависит от выбранной темы */
-    border: 1px solid var(--text-color); /* Граница также меняется в зависимости от темы */
+  width: 100%;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: none;
+  margin-bottom: 20px;
+  height: 250px;
+  background-color: transparent; /* Прозрачный фон для совместимости с темой */
+  color: var(--text-color); /* Цвет текста зависит от выбранной темы */
+  border: 1px solid var(--text-color); /* Граница также меняется в зависимости от темы */
 }
 
 button {
-    padding: 10px 20px;
-    cursor: pointer;
-    background-color: var(--btn-bg-color);
-    color: var(--text-color);
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    transition: background-color 0.3s ease; /* Плавное изменение цвета кнопки */
+  padding: 10px 20px;
+  cursor: pointer;
+  background-color: var(--btn-bg-color);
+  color: var(--text-color);
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  transition: background-color 0.3s ease; /* Плавное изменение цвета кнопки */
 }
 
 button:hover {
-    background-color: var(--btn-hover-bg-color);
+  background-color: var(--btn-hover-bg-color);
 }
 
 .highlighted-id {
-    color: red; /* Подсветка ID */
-    font-weight: bold;
+  color: red; /* Подсветка ID */
+  font-weight: bold;
 }
 /* styles.css */
 
 #themeSwitcher {
-    position: absolute; /* Позиционируем кнопку абсолютно */
-    top: 15px;          /* Верхнее положение */
-    left: 15px;         /* Левое положение */
-    padding: 5px 10px;  /* Уменьшаем подушечки */
-    font-size: 12px;    /* Меньший шрифт */
+  position: absolute; /* Позиционируем кнопку абсолютно */
+  top: 15px; /* Верхнее положение */
+  left: 15px; /* Левое положение */
+  padding: 5px 10px; /* Уменьшаем подушечки */
+  font-size: 12px; /* Меньший шрифт */
 }
 /* styles.css */
 
 body.dark-theme {
-    --bg-color: #121212;
-    --text-color: #fff; /* Белый текст для тёмной темы */
-    --btn-bg-color: #007bff;
-    --btn-hover-bg-color: #0056b3;
+  --bg-color: rgb(42, 42, 42);
+  --text-color: #fff; /* Белый текст для тёмной темы */
+  --btn-bg-color: #007bff;
+  --btn-hover-bg-color: #0056b3;
+}
+.container {
+  display: flex;
 }
