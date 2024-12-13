@@ -52,24 +52,38 @@ let isDarkMode = false; // Флаг для отслеживания текуще
 
 function toggleTheme() {
   const body = document.body;
-  const themeSwitcher = document.getElementById("themeSwitcher");
-  const headings = document.querySelectorAll("h1, label");
+  const moonSunImage = document.querySelector(".moon_sun");
+  const sectionHeader = document.querySelector(".section_header");
+  const buttonNavs = document.querySelectorAll(".button_nav");
+  const titleLabels = document.querySelectorAll(".title_label");
 
   if (isDarkMode) {
     body.classList.remove("dark-theme"); // Удаляем класс dark-theme
     body.classList.add("light-theme"); // Добавляем класс light-theme
-    themeSwitcher.innerText = "Тёмная тема"; // Меняем текст кнопки
 
-    headings.forEach((heading) => {
-      heading.style.color = "#000"; // Цвет текста для светлой темы
+    moonSunImage.src = "assets/img/moon.png"; // Меняем изображение на moon
+    sectionHeader.style.backgroundColor = "#ece4de"; // Цвет фона для светлой темы
+
+    buttonNavs.forEach((button) => {
+      button.style.color = "#333"; // Цвет текста кнопок навигации для светлой темы
+    });
+
+    titleLabels.forEach((label) => {
+      label.style.color = "#333"; // Цвет текста заголовков для светлой темы
     });
   } else {
     body.classList.remove("light-theme"); // Удаляем класс light-theme
     body.classList.add("dark-theme"); // Добавляем класс dark-theme
-    themeSwitcher.innerText = "Светлая тема"; // Меняем текст кнопки
 
-    headings.forEach((heading) => {
-      heading.style.color = "#fff"; // Цвет текста для тёмной темы
+    moonSunImage.src = "assets/img/sun.png"; // Меняем изображение на sun
+    sectionHeader.style.backgroundColor = "#1A1919"; // Цвет фона для тёмной темы
+
+    buttonNavs.forEach((button) => {
+      button.style.color = "#f5f5f5"; // Цвет текста кнопок навигации для тёмной темы
+    });
+
+    titleLabels.forEach((label) => {
+      label.style.color = "#f5f5f5"; // Цвет текста заголовков для тёмной темы
     });
   }
   isDarkMode = !isDarkMode; // Инвертируем флаг

@@ -1,22 +1,22 @@
 /* styles.css */
 
 :root {
-  --bg-color: #f9f9f9;
+  --bg-color: #f5f5f5;
   --text-color: #333;
   --btn-bg-color: #007bff;
   --btn-hover-bg-color: #0056b3;
 }
 
 body.light-theme {
-  --bg-color: #f9f9f9;
+  --bg-color: #f5f5f5;
   --text-color: #333;
   --btn-bg-color: #007bff;
   --btn-hover-bg-color: #0056b3;
 }
 
 body.dark-theme {
-  --bg-color: #121212;
-  --text-color: #fff;
+  --bg-color: #5b5555;
+  --text-color: #f5f5f5;
   --btn-bg-color: #007bff;
   --btn-hover-bg-color: #0056b3;
 }
@@ -29,16 +29,10 @@ body {
   height: 100vh;
   margin: 0;
   background-color: var(--bg-color);
-  transition: background-color 0.3s ease; /* Плавный переход при смене темы */
+  transition: 0.3s ease; /* Плавный переход при смене темы */
   flex-direction: column;
   gap: 50px;
   padding-top: 100px;
-}
-
-#app {
-  width: 80%;
-  max-width: 1200px;
-  text-align: center;
 }
 
 .form-group {
@@ -58,21 +52,30 @@ textarea {
   background-color: transparent; /* Прозрачный фон для совместимости с темой */
   color: var(--text-color); /* Цвет текста зависит от выбранной темы */
   border: 1px solid var(--text-color); /* Граница также меняется в зависимости от темы */
+  border-radius: 10px;
+  font-family: Montserrat_Medium;
 }
 
-button {
-  padding: 10px 20px;
+.button_v1 {
+  padding: 12px 40px;
   cursor: pointer;
-  background-color: var(--btn-bg-color);
+  background-color: #f5f5f5;
   color: var(--text-color);
   border: none;
-  border-radius: 5px;
+  border: solid 1px #2a2828;
+  border-radius: 30px;
+  color: #1a1919;
   font-size: 16px;
-  transition: background-color 0.3s ease; /* Плавное изменение цвета кнопки */
+  transition: 0.3s ease; /* Плавное изменение цвета кнопки */
+  font-family: Montserrat_Medium;
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 17px;
 }
 
-button:hover {
-  background-color: var(--btn-hover-bg-color);
+.button_v1:hover {
+  background-color: #ded8d7;
+  border: solid 1px #ded8d7;
 }
 
 .highlighted-id {
@@ -92,10 +95,50 @@ button:hover {
 
 body.dark-theme {
   --bg-color: rgb(42, 42, 42);
-  --text-color: #fff; /* Белый текст для тёмной темы */
+  --text-color: #f5f5f5; /* Белый текст для тёмной темы */
   --btn-bg-color: #007bff;
   --btn-hover-bg-color: #0056b3;
 }
 .container {
   display: flex;
+  width: 100%;
+  max-width: 1440px;
+  text-align: center;
+  padding: 100px 50px;
+}
+.section_header {
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  width: 80%;
+  height: 70px;
+  position: fixed;
+  top: 0px;
+  margin: 0 auto;
+  background-color: #ece4de;
+  padding: 5px 25px 10px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: 0.3s ease;
+}
+.title_label {
+  font-family: Montserrat_SemiBold;
+  font-size: 18px;
+  font-weight: 300;
+  line-height: 20px;
+}
+.box_nav_button {
+  display: flex;
+  gap: 50px;
+}
+.button_nav {
+  font-family: Montserrat_SemiBold;
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 14px;
+}
+.moon_sun {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
 }
