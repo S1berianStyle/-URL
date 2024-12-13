@@ -52,16 +52,15 @@ let isDarkMode = false; // Флаг для отслеживания текуще
 
 function toggleTheme() {
   const body = document.body;
-  const moonSunImage = document.querySelector(".moon_sun");
+
   const sectionHeader = document.querySelector(".section_header");
   const buttonNavs = document.querySelectorAll(".button_nav");
   const titleLabels = document.querySelectorAll(".title_label");
 
   if (isDarkMode) {
-    body.classList.remove("dark-theme"); // Удаляем класс dark-theme
-    body.classList.add("light-theme"); // Добавляем класс light-theme
+    body.classList.remove("light-theme"); // Удаляем класс dark-theme
+    body.classList.add("dark-theme"); // Добавляем класс light-theme
 
-    moonSunImage.src = "assets/img/moon.png"; // Меняем изображение на moon
     sectionHeader.style.backgroundColor = "#ece4de"; // Цвет фона для светлой темы
 
     buttonNavs.forEach((button) => {
@@ -72,10 +71,9 @@ function toggleTheme() {
       label.style.color = "#333"; // Цвет текста заголовков для светлой темы
     });
   } else {
-    body.classList.remove("light-theme"); // Удаляем класс light-theme
-    body.classList.add("dark-theme"); // Добавляем класс dark-theme
+    body.classList.remove("dark-theme"); // Удаляем класс light-theme
+    body.classList.add("light-theme"); // Добавляем класс dark-theme
 
-    moonSunImage.src = "assets/img/sun.png"; // Меняем изображение на sun
     sectionHeader.style.backgroundColor = "#1A1919"; // Цвет фона для тёмной темы
 
     buttonNavs.forEach((button) => {

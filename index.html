@@ -16,7 +16,19 @@
         <nav class="button_nav">Перевод Юрист</nav>
         <nav class="button_nav">Перевод Врач</nav>
       </div>
-      <img onclick="toggleTheme()" class="moon_sun" src="assets/img/moon.png" />
+      <div class="switch">
+        <input
+          onclick="toggleTheme()"
+          type="checkbox"
+          class="switch__input"
+          id="Switch"
+        />
+        <label class="switch__label" for="Switch">
+          <span class="switch__indicator"></span>
+          <span class="switch__decoration"></span>
+        </label>
+      </div>
+      <!-- <img onclick="toggleTheme()" class="moon_sun" src="assets/img/moon.png" /> -->
     </header>
     <h1>Обрезатель URL</h1>
     <div id="app" class="container">
