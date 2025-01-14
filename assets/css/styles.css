@@ -6,6 +6,10 @@
   --btn-bg-color: #007bff;
   --btn-hover-bg-color: #0056b3;
 }
+.logo-image {
+  width: 50px;
+  height: auto;
+}
 
 body.light-theme {
   --bg-color: #f5f5f5;
