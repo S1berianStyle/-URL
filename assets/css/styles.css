@@ -30,7 +30,7 @@ body {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  height: 100vh;
+  height: 2180;
   margin: 0;
   background-color: var(--bg-color);
   transition: 0.3s ease; /* Плавный переход при смене темы */
@@ -57,7 +57,8 @@ textarea {
   color: var(--text-color); /* Цвет текста зависит от выбранной темы */
   border: 1px solid var(--text-color); /* Граница также меняется в зависимости от темы */
   border-radius: 10px;
-  font-family: Montserrat_Medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-size: medium;
 }
 
 .button_v1 {
