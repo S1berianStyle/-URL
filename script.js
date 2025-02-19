@@ -144,7 +144,7 @@ document.getElementById('resultTransferLawyer').value = resultTextLawyer;
 
 // Остальные функции остаются без изменений...
 
-let isDarkMode = false; // Флаг для отслеживания текущего режима
+let isDarkMode = true; // Флаг для отслеживания текущего режима
 
 function toggleTheme() {
   const body = document.body;
