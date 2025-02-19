@@ -99,8 +99,8 @@ select:-webkit-autofill {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="icon.png" type="image/x-icon">
     <title>Обрезатель URL</title>
-    <link rel="stylesheet" href="assets/css/styles.css"><style class="darkreader darkreader--sync" media="screen"></style>
-    <link rel="stylesheet" href="assets/css/reset.css"><style class="darkreader darkreader--sync" media="screen"></style>
+    <link rel="stylesheet" href="styles.css"><style class="darkreader darkreader--sync" media="screen"></style>
+    <link rel="stylesheet" href="reset.css"><style class="darkreader darkreader--sync" media="screen"></style>
   <meta name="darkreader" content="a3af67a35e3c4f8d85b634ce558e8a46"><style class="darkreader darkreader--override" media="screen">.vimvixen-hint {
     background-color: var(--darkreader-background-ffd76e, #664d0d) !important;
     border-color: var(--darkreader-background-c59d00, #9d8016) !important;
@@ -267,7 +267,7 @@ d2l-empty-state-simple {
     fill: var(--darkreader-neutral-background) !important;
 }
 embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast(90%); }</style></head>
-  <body class="light-theme">
+  <body class="dark-theme">
     <header class="section_header">
       <nav><img src="icon.png" class="logo-image"></nav>
       <div class="box_nav_button">
@@ -285,26 +285,26 @@ embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast
     <h1>Обрезатель URL</h1>
     <div id="app" class="container" style="padding-bottom: 0px; padding-top: 40px;">
       <div class="form-group">
-        <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Вставьте URL:</label>
+        <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);;">Вставьте URL:</label>
         <textarea id="input" placeholder="Вставьте URL здесь..." oninput="processURLs()"></textarea>
         <button class="button_v1" onclick="clearFields()">Очистить</button>
       </div>
       <div class="form-group">
-        <label class="title_label" for="output" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Результат:</label>
+        <label class="title_label" for="output" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Результат:</label>
         <textarea id="output" readonly=""></textarea>
         <button class="button_v1" onclick="copyResult()">Скопировать</button>
       </div>
     </div>
     <div id="med" class="container" style="padding-bottom: 20px; padding-top: 0px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 500;">
         <div class="form-group">
-            <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Перевод на ВРАЧА</label>
+            <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Перевод на ВРАЧА</label>
             <textarea style="height: 40px;" type="number" id="toUserId" name="toUserId" placeholder="НА кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 40px;" type="number" id="fromUserId" name="fromUserId" placeholder="С кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 120px;" id="clientIds" name="clientIds" rows="4" placeholder="Клиенты через запятую, к примеру: 12345, 32134" oninput="processURLs()"></textarea>
             <button class="button_v1" onclick="transferDoctor()">Создать SQL запрос</button>
         </div>
         <div class="form-group">
-            <label class="title_label" for="outputTransfer" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Результат:</label>
+            <label class="title_label" for="outputTransfer" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Результат:</label>
             <textarea id="resultTransfer" readonly=""></textarea>
             <button class="button_v1" onclick="copyResultTransfer()">Скопировать</button>
             <button class="button_v1" onclick="clearFieldsTransfer()">Очистить</button>
@@ -313,14 +313,14 @@ embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast
 
     <div id="lawyer" class="container" style="padding-top: 0px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: 500;">
         <div class="form-group">
-            <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Перевод на ЮРИСТА</label>
+            <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Перевод на ЮРИСТА</label>
             <textarea style="height: 40px;" type="number" id="toUserIdLawyer" name="toUserIdLawyer" placeholder="НА кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 40px;" type="number" id="fromUserIdLawyer" name="fromUserIdLawyer" placeholder="С кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 120px;" id="clientIdsLawyer" name="clientIdsLawyer" rows="4" placeholder="Клиенты через запятую, к примеру: 12345, 32134" oninput="processURLs()"></textarea>
             <button class="button_v1" onclick="transferLawyer()">Создать SQL запрос</button>
         </div>
         <div class="form-group">
-            <label class="title_label" for="outputTransfer" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold;">Результат:</label>
+            <label class="title_label" for="outputTransfer" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Результат:</label>
             <textarea class="resultTransferLawyer" id="resultTransferLawyer" readonly=""></textarea>
             <button class="button_v1" onclick="copyResultTransferLawyer()">Скопировать</button>
             <button class="button_v1" onclick="clearFieldsTransferLawyer()">Очистить</button>
