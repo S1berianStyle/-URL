@@ -1,7 +1,8 @@
 function processURLs() {
   const inputElement = document.getElementById("input");
   const outputElement = document.getElementById("output");
-
+  const resultTransfer = document.getElementById("resultTransfer");
+  const outputElement2 = document.getElementById("outputTransfer");
   let inputText = inputElement.value.trim(); // Получаем текст из поля ввода
   if (!inputText) {
     // alert('Пожалуйста, введите URL или ID!');
@@ -32,11 +33,29 @@ function processURLs() {
 
   // Отображаем результат в текстовом поле вывода
   outputElement.value = result;
+  outputElement1.value = result;
+  outputElement2.value = result;
 }
 
 function copyResult() {
   const outputElement = document.getElementById("output");
   navigator.clipboard.writeText(outputElement.value); // Копируем текст в буфер обмена
+}
+
+function copyResultTransfer() {
+  const outputElement2 = document.getElementById("resultTransfer");
+  navigator.clipboard.writeText(outputElement2.value); // Копируем текст в буфер обмена
+
+  //const outputElement1 = document.getElementById("resultTransfer");
+  //outputElement1.value = "";
+}
+
+function copyResultTransferLawyer() {
+  const outputElement2 = document.getElementById("resultTransferLawyer");
+  navigator.clipboard.writeText(outputElement2.value); // Копируем текст в буфер обмена
+
+  //const outputElement1 = document.getElementById("resultTransfer");
+  //outputElement1.value = "";
 }
 
 function clearFields() {
@@ -45,6 +64,83 @@ function clearFields() {
   inputElement.value = "";
   outputElement.value = "";
 }
+
+function clearFieldsTransfer() {
+  const toUserIdInput = document.getElementById("toUserId");
+  const fromUserIdInput = document.getElementById("fromUserId")
+  const clientIdsInput = document.getElementById("clientIds")
+  let resultTransfer = document.getElementById("resultTransfer");
+  toUserIdInput.value = "";
+  fromUserIdInput.value = "";
+  clientIdsInput.value = "";
+  resultTransfer.value = "";
+}
+
+function clearFieldsTransferLawyer() {
+  const toUserIdLawyerInput = document.getElementById("toUserIdLawyer");
+  const fromUserIdLawyerInput = document.getElementById("fromUserIdLawyer")
+  const clientIdsLawyerInput = document.getElementById("clientIdsLawyer")
+  let resultTextLawyer = document.getElementById("resultTransferLawyer");
+  toUserIdLawyerInput.value = "";
+  fromUserIdLawyerInput.value = "";
+  clientIdsLawyerInput.value = "";
+  resultTextLawyer.value = "";
+}
+
+function transferDoctor(){
+
+    const fromUserIdInput = document.getElementById("fromUserId");
+    const toUserIdInput = document.getElementById("toUserId");
+    const clientIdsInput = document.getElementById("clientIds");
+
+    const fromUserId = fromUserIdInput.value;
+    const toUserId = toUserIdInput.value;
+    const clientIds = clientIdsInput.value.split(",").map(id => id.trim()).join(", ");
+
+    let resultText = `update crm_client_user SET user_id = ${toUserId}, date_start = NOW()
+where active = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});
+update crm_calendar SET user_id = ${toUserId}, TYPE = 2
+WHERE status = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});`
+
+//document.getElementById('resultTransfer').innerHTML = `${resultText}`
+
+document.getElementById('resultTransfer').value = resultText;
+
+}
+
+function transferLawyer(){
+
+  const fromUserIdLawyerInput = document.getElementById("fromUserIdLawyer");
+  const toUserIdLawyerInput = document.getElementById("toUserIdLawyer");
+  const clientIdsLawyerInput = document.getElementById("clientIdsLawyer");
+
+  const fromUserIdLawyer = fromUserIdLawyerInput.value;
+  const toUserIdLawyer = toUserIdLawyerInput.value;
+  const clientIdsLawyer = clientIdsLawyerInput.value.split(",").map(id => id.trim()).join(", ");
+
+  let resultTextLawyer = `update crm_client_user SET user_id = ${toUserIdLawyer}, date_start = NOW()
+where active = 1 
+AND user_id = ${fromUserIdLawyer}
+AND client_id IN (${clientIdsLawyer});
+update crm_calendar SET user_id = ${toUserIdLawyer}, TYPE = 3
+WHERE status = 1 
+AND user_id = ${fromUserIdLawyer}
+AND client_id IN (${clientIdsLawyer});
+update crm_client_subpoena SET user_id = ${toUserIdLawyer}
+WHERE user_id = ${fromUserIdLawyer}
+AND client_id IN (${clientIdsLawyer});
+update crm_court SET user_id = ${toUserIdLawyer}
+WHERE user_id = ${fromUserIdLawyer}
+AND client_id IN (${clientIdsLawyer});`
+
+document.getElementById('resultTransferLawyer').value = resultTextLawyer;
+
+}
+
 
 // Остальные функции остаются без изменений...
 
