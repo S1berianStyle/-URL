@@ -72,9 +72,9 @@ textarea {
   color: #1a1919;
   font-size: 16px;
   transition: 0.3s ease; /* Плавное изменение цвета кнопки */
-  font-family: Montserrat_Medium;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   font-size: 16px;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 17px;
 }
 
