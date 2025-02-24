@@ -95,7 +95,7 @@ function transferDoctor(){
 
     const fromUserId = fromUserIdInput.value;
     const toUserId = toUserIdInput.value;
-    const clientIds = clientIdsInput.value.split(",").map(id => id.trim()).join(", ");
+    const clientIds = clientIdsInput.value.split(/\r?\n/).join(", ");
 
     let resultText = `update crm_client_user SET user_id = ${toUserId}, date_start = NOW()
 where active = 1 
@@ -120,7 +120,7 @@ function transferLawyer(){
 
   const fromUserIdLawyer = fromUserIdLawyerInput.value;
   const toUserIdLawyer = toUserIdLawyerInput.value;
-  const clientIdsLawyer = clientIdsLawyerInput.value.split(",").map(id => id.trim()).join(", ");
+  const clientIdsLawyer = clientIdsLawyerInput.value.split(/\r?\n/).join(", ");
 
   let resultTextLawyer = `update crm_client_user SET user_id = ${toUserIdLawyer}, date_start = NOW()
 where active = 1 
