@@ -271,7 +271,7 @@ embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast
     <header class="section_header">
       <nav><img src="icon.png" class="logo-image"></nav>
       <div class="box_nav_button">
-
+        
       </div>
       <div class="switch">
         <input onclick="toggleTheme()" type="checkbox" class="switch__input" id="Switch">
@@ -300,7 +300,9 @@ embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast
             <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Перевод на ВРАЧА</label>
             <textarea style="height: 40px;" type="number" id="toUserId" name="toUserId" placeholder="НА кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 40px;" type="number" id="fromUserId" name="fromUserId" placeholder="С кого перевод?" oninput="processURLs()"></textarea>
-            <textarea style="height: 120px;" id="clientIds" name="clientIds" rows="4" placeholder="Клиенты через запятую, к примеру: 12345, 32134" oninput="processURLs()"></textarea>
+            <textarea style="height: 120px;" id="clientIds" name="clientIds" rows="4" 
+            placeholder="Клиенты через запятую, к примеру: 12345, 32134
+Можно и столбиком, но убедись, что нет пробелов)" oninput="processURLs()"></textarea>
             <button class="button_v1" onclick="transferDoctor()">Создать SQL запрос</button>
         </div>
         <div class="form-group">
@@ -316,7 +318,9 @@ embed[type="application/pdf"][src="about:blank"] { filter: invert(100%) contrast
             <label class="title_label" for="input" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-weight: bold; color: rgb(245, 245, 245);">Перевод на ЮРИСТА</label>
             <textarea style="height: 40px;" type="number" id="toUserIdLawyer" name="toUserIdLawyer" placeholder="НА кого перевод?" oninput="processURLs()"></textarea>
             <textarea style="height: 40px;" type="number" id="fromUserIdLawyer" name="fromUserIdLawyer" placeholder="С кого перевод?" oninput="processURLs()"></textarea>
-            <textarea style="height: 120px;" id="clientIdsLawyer" name="clientIdsLawyer" rows="4" placeholder="Клиенты через запятую, к примеру: 12345, 32134" oninput="processURLs()"></textarea>
+            <textarea style="height: 120px;" id="clientIdsLawyer" name="clientIdsLawyer" rows="4" 
+            placeholder="Клиенты через запятую, к примеру: 12345, 32134
+Можно и столбиком, но убедись, что нет пробелов)" oninput="processURLs()"></textarea>
             <button class="button_v1" onclick="transferLawyer()">Создать SQL запрос</button>
         </div>
         <div class="form-group">
