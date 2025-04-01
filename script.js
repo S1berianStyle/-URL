@@ -67,8 +67,8 @@ function clearFields() {
 
 function clearFieldsTransfer() {
   const toUserIdInput = document.getElementById("toUserId");
-  const fromUserIdInput = document.getElementById("fromUserId")
-  const clientIdsInput = document.getElementById("clientIds")
+  const fromUserIdInput = document.getElementById("fromUserId");
+  const clientIdsInput = document.getElementById("clientIds");
   let resultTransfer = document.getElementById("resultTransfer");
   toUserIdInput.value = "";
   fromUserIdInput.value = "";
@@ -78,8 +78,8 @@ function clearFieldsTransfer() {
 
 function clearFieldsTransferLawyer() {
   const toUserIdLawyerInput = document.getElementById("toUserIdLawyer");
-  const fromUserIdLawyerInput = document.getElementById("fromUserIdLawyer")
-  const clientIdsLawyerInput = document.getElementById("clientIdsLawyer")
+  const fromUserIdLawyerInput = document.getElementById("fromUserIdLawyer");
+  const clientIdsLawyerInput = document.getElementById("clientIdsLawyer");
   let resultTextLawyer = document.getElementById("resultTransferLawyer");
   toUserIdLawyerInput.value = "";
   fromUserIdLawyerInput.value = "";
@@ -87,33 +87,31 @@ function clearFieldsTransferLawyer() {
   resultTextLawyer.value = "";
 }
 
-function transferDoctor(){
+function transferDoctor() {
+  const fromUserIdInput = document.getElementById("fromUserId");
+  const toUserIdInput = document.getElementById("toUserId");
+  const clientIdsInput = document.getElementById("clientIds");
 
-    const fromUserIdInput = document.getElementById("fromUserId");
-    const toUserIdInput = document.getElementById("toUserId");
-    const clientIdsInput = document.getElementById("clientIds");
+  const fromUserId = fromUserIdInput.value;
+  const toUserId = toUserIdInput.value;
+  const clientIds = clientIdsInput.value.split(/\r?\n/).join(", ");
 
-    const fromUserId = fromUserIdInput.value;
-    const toUserId = toUserIdInput.value;
-    const clientIds = clientIdsInput.value.split(/\r?\n/).join(", ");
+  let resultText = `DELETE FROM crm_client_user WHERE active = 0 AND user_id = ${toUserId} AND client_id IN (${clientIds});
 
-    let resultText = `update crm_client_user SET user_id = ${toUserId}, date_start = NOW()
-where active = 1 
+UPDATE crm_client_user SET user_id = ${toUserId}, date_start = NOW()
+WHERE active = 1 
 AND user_id = ${fromUserId}
 AND client_id IN (${clientIds});
-update crm_calendar SET user_id = ${toUserId}, TYPE = 2
+
+UPDATE crm_calendar SET user_id = ${toUserId}, TYPE = 2
 WHERE status = 1 
 AND user_id = ${fromUserId}
-AND client_id IN (${clientIds});`
+AND client_id IN (${clientIds});`;
 
-//document.getElementById('resultTransfer').innerHTML = `${resultText}`
-
-document.getElementById('resultTransfer').value = resultText;
-
+  document.getElementById("resultTransfer").value = resultText;
 }
 
-function transferLawyer(){
-
+function transferLawyer() {
   const fromUserIdLawyerInput = document.getElementById("fromUserIdLawyer");
   const toUserIdLawyerInput = document.getElementById("toUserIdLawyer");
   const clientIdsLawyerInput = document.getElementById("clientIdsLawyer");
@@ -122,25 +120,28 @@ function transferLawyer(){
   const toUserIdLawyer = toUserIdLawyerInput.value;
   const clientIdsLawyer = clientIdsLawyerInput.value.split(/\r?\n/).join(", ");
 
-  let resultTextLawyer = `update crm_client_user SET user_id = ${toUserIdLawyer}, date_start = NOW()
-where active = 1 
+  let resultTextLawyer = `DELETE FROM crm_client_user WHERE active = 0 AND user_id = ${toUserIdLawyer} AND client_id IN (${clientIdsLawyer});
+
+UPDATE crm_client_user SET user_id = ${toUserIdLawyer}, date_start = NOW()
+WHERE active = 1 
 AND user_id = ${fromUserIdLawyer}
 AND client_id IN (${clientIdsLawyer});
-update crm_calendar SET user_id = ${toUserIdLawyer}, TYPE = 3
+
+UPDATE crm_calendar SET user_id = ${toUserIdLawyer}, TYPE = 3
 WHERE status = 1 
 AND user_id = ${fromUserIdLawyer}
 AND client_id IN (${clientIdsLawyer});
-update crm_client_subpoena SET user_id = ${toUserIdLawyer}
+
+UPDATE crm_client_subpoena SET user_id = ${toUserIdLawyer}
 WHERE user_id = ${fromUserIdLawyer}
 AND client_id IN (${clientIdsLawyer});
-update crm_court SET user_id = ${toUserIdLawyer}
+
+UPDATE crm_court SET user_id = ${toUserIdLawyer}
 WHERE user_id = ${fromUserIdLawyer}
-AND client_id IN (${clientIdsLawyer});`
+AND client_id IN (${clientIdsLawyer});`;
 
-document.getElementById('resultTransferLawyer').value = resultTextLawyer;
-
+  document.getElementById("resultTransferLawyer").value = resultTextLawyer;
 }
-
 
 // Остальные функции остаются без изменений...
 
