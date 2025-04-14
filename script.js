@@ -182,3 +182,4 @@ function toggleTheme() {
     });
   }
   isDarkMode = !isDarkMode; // Инвертируем флаг
+}
