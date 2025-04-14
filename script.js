@@ -183,6 +183,7 @@ function toggleTheme() {
   }
   isDarkMode = !isDarkMode; // Инвертируем флаг
 }
+
 // Функция для форматирования даты в нужный формат (дд.мм.гг чч:мм:сс)
 function formatDate(date) {
   const day = String(date.getDate()).padStart(2, "0");
@@ -407,4 +408,3 @@ document.addEventListener("DOMContentLoaded", function () {
   // Можно добавить интервал для автоматической очистки (например, раз в час)
   setInterval(cleanupOldRecords, 3600000);
 });
-
