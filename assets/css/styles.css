@@ -330,3 +330,19 @@ body.dark-theme {
     transform: translate(0%, -50%);
   }
 }
+.record-separator {
+  margin: 20px 0 10px 0;
+  padding: 5px;
+  background-color: #f0f0f0;
+  font-weight: bold;
+  text-align: center;
+}
+
+.record-content {
+  white-space: pre;
+  font-family: monospace;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 4px;
+  overflow-x: auto;
+}
