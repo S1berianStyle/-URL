@@ -182,4 +182,108 @@ function toggleTheme() {
     });
   }
   isDarkMode = !isDarkMode; // Инвертируем флаг
+  
+}
+// Конфигурация
+const GOOGLE_SCRIPT_URL =
+  "https://script.google.com/macros/s/AKfycbwMyEanp_X5G8Nhw2Uhy4_p7WGAz95jQvsDuSmrvJmRFGlSysmhJro5-XLzTwqa_aOM/exec";
+
+async function logToGoogleSheets(
+  actionType,
+  fromUserId,
+  toUserId,
+  clientIds,
+  sqlCommands
+) {
+  try {
+    const response = await fetch(GOOGLE_SCRIPT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        actionType: actionType,
+        fromUserId: fromUserId,
+        toUserId: toUserId,
+        clientIds: clientIds,
+        sqlCommands: sqlCommands,
+      }),
+    });
+
+    const result = await response.json();
+    if (!result.success) {
+      console.error("Ошибка сохранения в Google Sheets");
+    }
+  } catch (error) {
+    console.error("Ошибка:", error);
+  }
+}
+
+// Модифицированные функции transfer
+async function transferDoctor() {
+  const fromUserId = document.getElementById("fromUserId").value;
+  const toUserId = document.getElementById("toUserId").value;
+  const clientIds = document
+    .getElementById("clientIds")
+    .value.split(/\r?\n/)
+    .filter((id) => id.trim())
+    .join(", ");
+
+  const resultText = `DELETE FROM crm_client_user WHERE active = 0 AND user_id = ${toUserId} AND client_id IN (${clientIds});
+
+UPDATE crm_client_user SET user_id = ${toUserId}, date_start = NOW()
+WHERE active = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});
+
+UPDATE crm_calendar SET user_id = ${toUserId}, TYPE = 2
+WHERE status = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});`;
+
+  document.getElementById("resultTransfer").value = resultText;
+  await logToGoogleSheets(
+    "doctor_transfer",
+    fromUserId,
+    toUserId,
+    clientIds,
+    resultText
+  );
+}
+
+async function transferLawyer() {
+  const fromUserId = document.getElementById("fromUserIdLawyer").value;
+  const toUserId = document.getElementById("toUserIdLawyer").value;
+  const clientIds = document
+    .getElementById("clientIdsLawyer")
+    .value.split(/\r?\n/)
+    .filter((id) => id.trim())
+    .join(", ");
+
+  const resultText = `DELETE FROM crm_client_user WHERE active = 0 AND user_id = ${toUserId} AND client_id IN (${clientIds});
+
+UPDATE crm_client_user SET user_id = ${toUserId}, date_start = NOW()
+WHERE active = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});
+
+UPDATE crm_calendar SET user_id = ${toUserId}, TYPE = 3
+WHERE status = 1 
+AND user_id = ${fromUserId}
+AND client_id IN (${clientIds});
+
+UPDATE crm_client_subpoena SET user_id = ${toUserId}
+WHERE user_id = ${fromUserId}
+AND client_id IN (${clientIds});
+
+UPDATE crm_court SET user_id = ${toUserId}
+WHERE user_id = ${fromUserId}
+AND client_id IN (${clientIds});`;
+
+  document.getElementById("resultTransferLawyer").value = resultText;
+  await logToGoogleSheets(
+    "lawyer_transfer",
+    fromUserId,
+    toUserId,
+    clientIds,
+    resultText
+  );
 }
