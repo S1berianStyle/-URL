@@ -324,12 +324,17 @@ function showHistory() {
 
   // Контейнер для содержимого
   const content = document.createElement("div");
-  content.style.backgroundColor = "white";
   content.style.padding = "20px";
   content.style.borderRadius = "8px";
   content.style.maxWidth = "80%";
   content.style.maxHeight = "80vh";
   content.style.overflowY = "auto";
+
+  if(isDarkMode){
+    content.style.backgroundColor = "rgb(42, 42, 42)";
+  } else {
+    content.style.backgroundColor = "white";
+  }
 
   // Заголовок и кнопка закрытия
   const header = document.createElement("div");
@@ -341,9 +346,28 @@ function showHistory() {
   const title = document.createElement("h2");
   title.textContent = "История операций (хранится 2 дня)";
 
-  const closeBtn = document.createElement("button");
-  closeBtn.textContent = "Закрыть";
+  // const closeBtn = document.createElement("button");
+  // closeBtn.textContent = "Закрыть";
+
+  const closeBtn = document.createElement('img');
+  closeBtn.src = "exit.svg";
+  header.append(closeBtn);
+  closeBtn.style.height = "20px";
+
+
   closeBtn.onclick = () => document.body.removeChild(modal);
+  title.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+  closeBtn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+
+  
+
+  if(isDarkMode){
+    title.style.color = "white";
+    closeBtn.style.color = "white";
+  } else{
+    title.style.color = "black";
+    closeBtn.style.color = "black";
+  }
 
   header.appendChild(title);
   header.appendChild(closeBtn);
@@ -357,12 +381,19 @@ function showHistory() {
     const emptyMsg = document.createElement("p");
     emptyMsg.textContent = "История операций пуста";
     content.appendChild(emptyMsg);
+
+    if(isDarkMode){
+      emptyMsg.style.color = "white";
+    } else{
+      emptyMsg.style.color = "black";
+    }
+
   } else {
     records.forEach((record) => {
       const separator = document.createElement("div");
-      separator.textContent = `------------------------------------"${record.date}"------------------------------------`;
+      separator.textContent = `------------------------------------${record.date}------------------------------------`;
       separator.style.margin = "15px 0 5px 0";
-      separator.style.fontWeight = "bold";
+      //separator.style.fontWeight = "bold";
       separator.style.textAlign = "center";
       content.appendChild(separator);
 
@@ -370,9 +401,22 @@ function showHistory() {
       recordContent.textContent = record.content;
       recordContent.style.whiteSpace = "pre-wrap";
       recordContent.style.backgroundColor = "#f8f8f8";
+
       recordContent.style.padding = "10px";
       recordContent.style.borderRadius = "4px";
       content.appendChild(recordContent);
+      separator.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+      recordContent.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+      if(isDarkMode){
+        separator.style.color = "white";
+        recordContent.style.color = "white"
+        recordContent.style.backgroundColor = "rgb(90, 90, 90)";
+      } else{
+        separator.style.color = "black";
+        recordContent.style.color = "black"
+        recordContent.style.backgroundColor = "rgb(255, 255, 255)";
+      }
+
     });
   }
 
@@ -394,6 +438,7 @@ function initHistoryButton() {
     btn.style.border = "none";
     btn.style.borderRadius = "4px";
     btn.style.cursor = "pointer";
+    btn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
     // Добавляем кнопку в подходящее место на странице
     const container = document.querySelector("body"); // или другой подходящий элемент
