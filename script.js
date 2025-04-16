@@ -215,9 +215,9 @@ function cleanupOldRecords() {
 
   const filteredRecords = records.filter((record) => {
     const recordDate = new Date(record.timestamp);
-    const diffDays = (now - recordDate) / (1000 * 60 * 60 * 24);
-    return diffDays <= 2;
-  });
+    const diffHours = (now - recordDate) / (1000 * 60 * 60);
+    return diffHours <= 6;
+});
 
   localStorage.setItem("transferRecords", JSON.stringify(filteredRecords));
 }
@@ -312,6 +312,7 @@ function showHistory() {
   cleanupOldRecords();
   const records = JSON.parse(localStorage.getItem("transferRecords") || "[]");
 
+
   // Создаем модальное окно для отображения истории
   const modal = document.createElement("div");
   modal.id = "history";
@@ -324,11 +325,12 @@ function showHistory() {
   modal.style.display = "flex";
   modal.style.justifyContent = "center";
   modal.style.alignItems = "center";
-  modal.style.zIndex = "1000";
+  
 
   // Контейнер для содержимого
   const content = document.createElement("div");
   content.id = "content";
+  content.style.position = "fixed";
   content.style.padding = "20px";
   content.style.borderRadius = "8px";
   content.style.maxWidth = "80%";
@@ -360,13 +362,24 @@ function showHistory() {
   const title = document.createElement("h2");
   title.textContent = "История операций (хранится 2 дня)";
 
-  // const closeBtn = document.createElement("button");
-  // closeBtn.textContent = "Закрыть";
-
+  // Кнопка закрытия 
   const closeBtn = document.createElement('img');
   closeBtn.src = "exit.svg";
   header.append(closeBtn);
   closeBtn.style.height = "20px";
+
+  // Добавляем стили для анимации
+  closeBtn.style.transition = 'transform 0.3s ease-in-out';
+
+  // Анимация при наведении
+  closeBtn.addEventListener('mouseenter', () => {
+  closeBtn.style.transform = 'rotate(15deg)';
+  });
+
+  closeBtn.addEventListener('mouseleave', () => {
+  closeBtn.style.transform = 'rotate(0)';
+  });
+
 
   closeBtn.onclick = () => document.body.removeChild(modal);
   isHistory = true;
@@ -377,6 +390,7 @@ function showHistory() {
 
   closeBtn.addEventListener("click", function(){
     isHistory = false;
+    modal.remove(modal);
     document.body.style.overflow = "visible";
   })
 
@@ -394,10 +408,16 @@ function showHistory() {
   header.appendChild(title);
   header.appendChild(closeBtn);
   content.appendChild(header);
+  
+  modal.addEventListener('click', function(event) {
+    if (event.target === this) {
+      modal.remove(modal);
+      document.body.style.overflow = "visible";
+    }
+  });
 
   // Сортируем записи по дате (новые сверху)
   records.sort((a, b) => b.timestamp - a.timestamp);
-
   // Добавляем записи
   if (records.length === 0) {
     const emptyMsg = document.createElement("p");
@@ -413,7 +433,11 @@ function showHistory() {
   } else {
     records.forEach((record) => {
       const separator = document.createElement("div");
-      separator.textContent = `------------------------------------${record.date}------------------------------------`;
+      separator.id = "separator";
+      separator.textContent = `${record.date}`;
+      separator.style.padding = "6px";
+      separator.style.backgroundColor = "rgb(128, 23, 23)";
+      separator.style.borderRadius = "4px";
       separator.style.margin = "15px 0 5px 0";
       //separator.style.fontWeight = "bold";
       separator.style.textAlign = "center";
@@ -438,12 +462,13 @@ function showHistory() {
         recordContent.style.color = "black"
         recordContent.style.backgroundColor = "rgb(255, 255, 255)";
       }
-
+      
     });
+
   }
 
-  modal.appendChild(content);
   document.body.appendChild(modal);
+  modal.appendChild(content);
 
   // hst = document.getElementById("history");
   // hst.addEventListener("click", function(){
