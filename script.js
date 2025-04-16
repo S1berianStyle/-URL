@@ -347,7 +347,16 @@ function showHistory() {
   header.style.justifyContent = "space-between";
   header.style.alignItems = "center";
   header.style.marginBottom = "15px";
+  header.style.position = "sticky";
+  header.style.top = "-20px";
 
+  if(isDarkMode){
+    header.style.backgroundColor = "rgb(42, 42, 42)";
+  } else {
+    header.style.backgroundColor = "rgb(255, 255, 255)";
+  }
+  header.style.padding = "10px";
+  header.style.margin = "0px";
   const title = document.createElement("h2");
   title.textContent = "История операций (хранится 2 дня)";
 
@@ -358,7 +367,6 @@ function showHistory() {
   closeBtn.src = "exit.svg";
   header.append(closeBtn);
   closeBtn.style.height = "20px";
-
 
   closeBtn.onclick = () => document.body.removeChild(modal);
   isHistory = true;
