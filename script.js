@@ -587,3 +587,51 @@ document.addEventListener("DOMContentLoaded", function () {
   // Можно добавить интервал для автоматической очистки (например, раз в час)
   setInterval(cleanupOldRecords, 3600000);
 });
+
+document.querySelector(".moving-gif").addEventListener("click", function (e) {
+  // Получаем позицию клика относительно контейнера
+  const container = this.parentElement;
+  const rect = container.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  // Создаём 30 частиц
+  for (let i = 0; i < 30; i++) {
+    createParticle(x, y, container);
+  }
+
+  // Можно добавить звук взрыва
+  // new Audio('explosion.mp3').play();
+});
+
+function createParticle(x, y, container) {
+  // Создаём элемент частицы
+  const particle = document.createElement("div");
+  particle.className = "particle";
+
+  // Случайный цвет
+  const hue = Math.random() * 60 + 10; // Оранжево-красные тона
+  particle.style.backgroundColor = `hsl(${hue}, 100%, 50%)`;
+
+  // Начальная позиция
+  particle.style.left = `${x}px`;
+  particle.style.top = `${y}px`;
+
+  // Случайное направление и расстояние
+  const angle = Math.random() * Math.PI * 2;
+  const distance = 50 + Math.random() * 100;
+  const tx = Math.cos(angle) * distance;
+  const ty = Math.sin(angle) * distance;
+
+  // Устанавливаем CSS-переменные для анимации
+  particle.style.setProperty("--tx", `${tx}px`);
+  particle.style.setProperty("--ty", `${ty}px`);
+
+  // Добавляем частицу в контейнер
+  container.appendChild(particle);
+
+  // Удаляем частицу после анимации
+  setTimeout(() => {
+    particle.remove();
+  }, 1000);
+}
