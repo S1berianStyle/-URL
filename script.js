@@ -215,9 +215,9 @@ function cleanupOldRecords() {
 
   const filteredRecords = records.filter((record) => {
     const recordDate = new Date(record.timestamp);
-    const diffHours = (now - recordDate) / (1000 * 60 * 60);
-    return diffHours <= 6;
-});
+    const diffDays = (now - recordDate) / (1000 * 60 * 60 * 24);
+    return diffDays <= 2;
+  });
 
   localStorage.setItem("transferRecords", JSON.stringify(filteredRecords));
 }
@@ -308,10 +308,8 @@ isHistory = false;
 
 // Функция для отображения истории
 function showHistory() {
-
   cleanupOldRecords();
   const records = JSON.parse(localStorage.getItem("transferRecords") || "[]");
-
 
   // Создаем модальное окно для отображения истории
   const modal = document.createElement("div");
@@ -325,7 +323,6 @@ function showHistory() {
   modal.style.display = "flex";
   modal.style.justifyContent = "center";
   modal.style.alignItems = "center";
-  
 
   // Контейнер для содержимого
   const content = document.createElement("div");
@@ -337,7 +334,7 @@ function showHistory() {
   content.style.maxHeight = "80vh";
   content.style.overflowY = "auto";
 
-  if(isDarkMode){
+  if (isDarkMode) {
     content.style.backgroundColor = "rgb(42, 42, 42)";
   } else {
     content.style.backgroundColor = "white";
@@ -352,7 +349,7 @@ function showHistory() {
   header.style.position = "sticky";
   header.style.top = "-20px";
 
-  if(isDarkMode){
+  if (isDarkMode) {
     header.style.backgroundColor = "rgb(42, 42, 42)";
   } else {
     header.style.backgroundColor = "rgb(255, 255, 255)";
@@ -362,45 +359,124 @@ function showHistory() {
   const title = document.createElement("h2");
   title.textContent = "История операций (хранится 2 дня)";
 
-  // Кнопка закрытия 
-  const closeBtn = document.createElement('img');
+  // Кнопка закрытия
+  const closeBtn = document.createElement("img");
   closeBtn.src = "exit.svg";
   header.append(closeBtn);
   closeBtn.style.height = "20px";
 
   // Добавляем стили для анимации
-  closeBtn.style.transition = 'transform 0.3s ease-in-out';
+  closeBtn.style.transition = "all 1.11s ease-in-out";
 
-  // Анимация при наведении
-  closeBtn.addEventListener('mouseenter', () => {
-  closeBtn.style.transform = 'rotate(15deg)';
+  // Добавляем стили для анимации
+  closeBtn.style.transition = "all 0.2s ease-in-out";
+  closeBtn.style.position = "relative"; // Для эффекта разлёта частиц
+
+  // Анимация при наведении (по часовой стрелке)
+  closeBtn.addEventListener("mouseenter", () => {
+    closeBtn.style.transform = "rotate(360deg) scale(1.7)";
   });
 
-  closeBtn.addEventListener('mouseleave', () => {
-  closeBtn.style.transform = 'rotate(0)';
+  // Возврат при уходе курсора
+  closeBtn.addEventListener("mouseleave", () => {
+    closeBtn.style.transform = "rotate(0) scale(1)";
   });
 
+  // Анимация при нажатии (против часовой стрелки)
+  closeBtn.addEventListener("mousedown", () => {
+    closeBtn.style.transform = "rotate(-90deg) scale(0.8)";
+  });
+
+  // ВЗРЫВ при отпускании! 💥
+  closeBtn.addEventListener("mouseup", () => {
+    // 1. Сначала прячем кнопку
+    closeBtn.style.opacity = "0";
+    closeBtn.style.transform = "rotate(-180deg) scale(0)";
+
+    // 2. Создаём эффект взрыва (частицы)
+    createExplosionEffect(closeBtn);
+
+    // 3. Через 1 секунду возвращаем кнопку (если нужно)
+    setTimeout(() => {
+      closeBtn.style.opacity = "1";
+      closeBtn.style.transform = "rotate(0) scale(1)";
+    }, 1000);
+  });
+
+  // Функция для создания эффекта взрыва (разлёт частиц)
+  function createExplosionEffect(element) {
+    const particles = 50; // Количество частиц
+    const { left, top, width, height } = element.getBoundingClientRect();
+    const centerX = left + width / 100;
+    const centerY = top + height / 100;
+
+    for (let i = 0; i < particles; i++) {
+      const particle = document.createElement("div");
+      particle.style.position = "fixed";
+      particle.style.width = "6px";
+      particle.style.height = "6px";
+      particle.style.backgroundColor = getRandomColor();
+      particle.style.borderRadius = "50%";
+      particle.style.left = `${centerX}px`;
+      particle.style.top = `${centerY}px`;
+      particle.style.pointerEvents = "none";
+      particle.style.zIndex = "1000";
+
+      document.body.appendChild(particle);
+
+      // Анимация разлёта частиц
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 30 + Math.random() * 150;
+      const duration = 1.5 + Math.random() * 1.5;
+
+      particle.animate(
+        [
+          { transform: "translate(0, 0)", opacity: 1 },
+          {
+            transform: `translate(${Math.cos(angle) * distance}px, ${
+              Math.sin(angle) * distance
+            }px)`,
+            opacity: 0,
+          },
+        ],
+        {
+          duration: duration * 1000,
+          easing: "cubic-bezier(0, 0.8, 0.2, 1)",
+          fill: "forwards",
+        }
+      );
+
+      // Удаляем частицу после анимации
+      setTimeout(() => particle.remove(), duration * 1000);
+    }
+  }
+
+  // Рандомный цвет для частиц
+  function getRandomColor() {
+    const colors = ["#FF5733", "#33FF57", "#3357FF", "#F3FF33", "#FF33F5"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
 
   closeBtn.onclick = () => document.body.removeChild(modal);
   isHistory = true;
 
-  closeBtn.addEventListener("mouseover", function(){
+  closeBtn.addEventListener("mouseover", function () {
     closeBtn.style.cursor = "pointer";
-  })
+  });
 
-  closeBtn.addEventListener("click", function(){
+  closeBtn.addEventListener("click", function () {
     isHistory = false;
     modal.remove(modal);
     document.body.style.overflow = "visible";
-  })
+  });
 
   title.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
   closeBtn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
-  if(isDarkMode){
+  if (isDarkMode) {
     title.style.color = "white";
     closeBtn.style.color = "white";
-  } else{
+  } else {
     title.style.color = "black";
     closeBtn.style.color = "black";
   }
@@ -408,8 +484,8 @@ function showHistory() {
   header.appendChild(title);
   header.appendChild(closeBtn);
   content.appendChild(header);
-  
-  modal.addEventListener('click', function(event) {
+
+  modal.addEventListener("click", function (event) {
     if (event.target === this) {
       modal.remove(modal);
       document.body.style.overflow = "visible";
@@ -424,12 +500,11 @@ function showHistory() {
     emptyMsg.textContent = "История операций пуста";
     content.appendChild(emptyMsg);
 
-    if(isDarkMode){
+    if (isDarkMode) {
       emptyMsg.style.color = "white";
-    } else{
+    } else {
       emptyMsg.style.color = "black";
     }
-
   } else {
     records.forEach((record) => {
       const separator = document.createElement("div");
@@ -451,20 +526,20 @@ function showHistory() {
       recordContent.style.padding = "10px";
       recordContent.style.borderRadius = "4px";
       content.appendChild(recordContent);
-      separator.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-      recordContent.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-      if(isDarkMode){
+      separator.style.fontFamily =
+        "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+      recordContent.style.fontFamily =
+        "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
+      if (isDarkMode) {
         separator.style.color = "white";
-        recordContent.style.color = "white"
+        recordContent.style.color = "white";
         recordContent.style.backgroundColor = "rgb(90, 90, 90)";
-      } else{
+      } else {
         separator.style.color = "black";
-        recordContent.style.color = "black"
+        recordContent.style.color = "black";
         recordContent.style.backgroundColor = "rgb(255, 255, 255)";
       }
-      
     });
-
   }
 
   document.body.appendChild(modal);
@@ -493,18 +568,17 @@ function initHistoryButton() {
     btn.style.cursor = "pointer";
     btn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
-    btn.addEventListener("click", function(){
-      if(isHistory == true){
+    btn.addEventListener("click", function () {
+      if (isHistory == true) {
         document.body.style.overflow = "hidden";
       }
-    })
+    });
 
     // Добавляем кнопку в подходящее место на странице
     const container = document.querySelector("body"); // или другой подходящий элемент
     container.appendChild(btn);
   }
 }
-
 
 // Инициализация при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
@@ -513,4 +587,3 @@ document.addEventListener("DOMContentLoaded", function () {
   // Можно добавить интервал для автоматической очистки (например, раз в час)
   setInterval(cleanupOldRecords, 3600000);
 });
-
