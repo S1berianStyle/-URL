@@ -304,13 +304,17 @@ AND client_id IN (${clientIdsLawyer});`;
   addRecord("lawyer", resultTextLawyer);
 }
 
+isHistory = false;
+
 // Функция для отображения истории
 function showHistory() {
+
   cleanupOldRecords();
   const records = JSON.parse(localStorage.getItem("transferRecords") || "[]");
 
   // Создаем модальное окно для отображения истории
   const modal = document.createElement("div");
+  modal.id = "history";
   modal.style.position = "fixed";
   modal.style.top = "0";
   modal.style.left = "0";
@@ -324,6 +328,7 @@ function showHistory() {
 
   // Контейнер для содержимого
   const content = document.createElement("div");
+  content.id = "content";
   content.style.padding = "20px";
   content.style.borderRadius = "8px";
   content.style.maxWidth = "80%";
@@ -356,10 +361,19 @@ function showHistory() {
 
 
   closeBtn.onclick = () => document.body.removeChild(modal);
+  isHistory = true;
+
+  closeBtn.addEventListener("mouseover", function(){
+    closeBtn.style.cursor = "pointer";
+  })
+
+  closeBtn.addEventListener("click", function(){
+    isHistory = false;
+    document.body.style.overflow = "visible";
+  })
+
   title.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
   closeBtn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
-
-  
 
   if(isDarkMode){
     title.style.color = "white";
@@ -422,6 +436,12 @@ function showHistory() {
 
   modal.appendChild(content);
   document.body.appendChild(modal);
+
+  // hst = document.getElementById("history");
+  // hst.addEventListener("click", function(){
+  //   hst.remove(modal);
+  //   document.body.style.overflow = "visible";
+  // })
 }
 
 // Добавляем кнопку для показа истории, если её нет
@@ -440,11 +460,18 @@ function initHistoryButton() {
     btn.style.cursor = "pointer";
     btn.style.fontFamily = "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif";
 
+    btn.addEventListener("click", function(){
+      if(isHistory == true){
+        document.body.style.overflow = "hidden";
+      }
+    })
+
     // Добавляем кнопку в подходящее место на странице
     const container = document.querySelector("body"); // или другой подходящий элемент
     container.appendChild(btn);
   }
 }
+
 
 // Инициализация при загрузке страницы
 document.addEventListener("DOMContentLoaded", function () {
@@ -453,3 +480,4 @@ document.addEventListener("DOMContentLoaded", function () {
   // Можно добавить интервал для автоматической очистки (например, раз в час)
   setInterval(cleanupOldRecords, 3600000);
 });
+
