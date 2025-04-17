@@ -511,10 +511,15 @@ function showHistory() {
       separator.id = "separator";
       separator.textContent = `${record.date}`;
       separator.style.padding = "6px";
-      separator.style.backgroundColor = "rgb(128, 23, 23)";
+
+      if(isDarkMode){
+        separator.style.backgroundColor = "rgb(65, 65, 65)";
+      } else {
+        separator.style.backgroundColor = "rgb(212, 212, 212)";
+      }
       separator.style.borderRadius = "4px";
       separator.style.margin = "15px 0 5px 0";
-      //separator.style.fontWeight = "bold";
+      separator.style.fontWeight = "bold";
       separator.style.textAlign = "center";
       content.appendChild(separator);
 
@@ -544,12 +549,6 @@ function showHistory() {
 
   document.body.appendChild(modal);
   modal.appendChild(content);
-
-  // hst = document.getElementById("history");
-  // hst.addEventListener("click", function(){
-  //   hst.remove(modal);
-  //   document.body.style.overflow = "visible";
-  // })
 }
 
 // Добавляем кнопку для показа истории, если её нет
